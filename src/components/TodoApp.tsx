@@ -7,7 +7,7 @@ import styles from "./styles.module.css";
 export const TodoApp: React.FC = () => {
 	const [title, setTitle] = useState("");
 	const { data: todosFromApi, error, isLoading } = useGetTodosQuery();
-	const [addTodo] = useAddTodoMutation();
+	const [addTodo, { isLoading: isTodoAdding }] = useAddTodoMutation();
 	const { setTodos, addTodo: addTodoToStore } = useTodoStore();
 
 	useEffect(() => {
@@ -34,8 +34,11 @@ export const TodoApp: React.FC = () => {
 						value={title}
 						onChange={(e) => setTitle(e.target.value)}
 						placeholder="Add a new task"
+						disabled={isTodoAdding}
 					/>
-					<button onClick={handleAddTodo}>Добавить TODO</button>
+					<button onClick={handleAddTodo} disabled={isTodoAdding}>
+						Добавить TODO
+					</button>
 				</div>
 
 				{isLoading && <p>Загрузка...</p>}

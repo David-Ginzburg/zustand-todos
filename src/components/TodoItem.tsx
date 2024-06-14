@@ -11,9 +11,11 @@ export const TodoItem: React.FC<TodoItemProps> = ({ todo }) => {
 	const [isEditing, setIsEditing] = useState(false);
 	const [newTitle, setNewTitle] = useState(todo.title);
 
-	const [updateTodo] = useUpdateTodoMutation();
-	const [deleteTodo] = useDeleteTodoMutation();
+	const [updateTodo, { isLoading: isTodoUpdateing }] = useUpdateTodoMutation();
+	const [deleteTodo, { isLoading: isTodoDeleting }] = useDeleteTodoMutation();
 	const { deleteTodo: deleteFromStore, updateTodo: updateInStore } = useTodoStore();
+
+	const isTodoDisable = isTodoUpdateing || isTodoDeleting;
 
 	const handleSave = async () => {
 		await updateTodo({
@@ -35,8 +37,15 @@ export const TodoItem: React.FC<TodoItemProps> = ({ todo }) => {
 		<div className={styles.todoItem}>
 			{isEditing ? (
 				<>
-					<input type="text" value={newTitle} onChange={(e) => setNewTitle(e.target.value)} />
-					<button onClick={handleSave}>Save</button>
+					<input
+						type="text"
+						value={newTitle}
+						onChange={(e) => setNewTitle(e.target.value)}
+						disabled={isTodoDisable}
+					/>
+					<button onClick={handleSave} disabled={isTodoDisable}>
+						Save
+					</button>
 				</>
 			) : (
 				<>
@@ -47,9 +56,16 @@ export const TodoItem: React.FC<TodoItemProps> = ({ todo }) => {
 					>
 						{todo.title}
 					</span>
-					<button onClick={() => setIsEditing(true)}>Редактировать</button>
-					<button onClick={handleDelete}>Удалить</button>
-					<button onClick={() => updateInStore(todo.id, { completed: !todo.completed })}>
+					<button onClick={() => setIsEditing(true)} disabled={isTodoDisable}>
+						Редактировать
+					</button>
+					<button onClick={handleDelete} disabled={isTodoDisable}>
+						Удалить
+					</button>
+					<button
+						onClick={() => updateInStore(todo.id, { completed: !todo.completed })}
+						disabled={isTodoDisable}
+					>
 						{todo.completed ? "Не выполнено" : "Выполнено"}
 					</button>
 				</>
