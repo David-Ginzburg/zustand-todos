@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useUpdateTodoMutation, useDeleteTodoMutation } from "../api/todoApi";
+import { useUpdateTodoMutation, useDeleteTodoMutation, useAddTodoMutation } from "../api/todoApi";
 import { useTodoStore } from "../store/useTodoStore";
 import styles from "./styles.module.css";
 
@@ -13,9 +13,14 @@ export const TodoItem: React.FC<TodoItemProps> = ({ todo }) => {
 
 	const [updateTodo, { isLoading: isTodoUpdateing }] = useUpdateTodoMutation();
 	const [deleteTodo, { isLoading: isTodoDeleting }] = useDeleteTodoMutation();
-	const { deleteTodo: deleteFromStore, updateTodo: updateInStore } = useTodoStore();
+	const [addTodo, { isLoading: isTodoAdding }] = useAddTodoMutation();
+	const {
+		deleteTodo: deleteFromStore,
+		updateTodo: updateInStore,
+		addTodo: addTodoToStore,
+	} = useTodoStore();
 
-	const isTodoDisable = isTodoUpdateing || isTodoDeleting;
+	const isTodoDisable = isTodoUpdateing || isTodoDeleting || isTodoAdding;
 
 	const handleSave = async () => {
 		await updateTodo({
@@ -31,6 +36,15 @@ export const TodoItem: React.FC<TodoItemProps> = ({ todo }) => {
 	const handleDelete = async () => {
 		await deleteTodo(todo.id);
 		deleteFromStore(todo.id);
+	};
+
+	const handleCopy = async () => {
+		const newTodo = await addTodo({
+			userId: 1,
+			title: newTitle,
+			completed: false,
+		}).unwrap();
+		addTodoToStore(newTodo);
 	};
 
 	return (
@@ -61,6 +75,9 @@ export const TodoItem: React.FC<TodoItemProps> = ({ todo }) => {
 					</button>
 					<button onClick={handleDelete} disabled={isTodoDisable}>
 						Удалить
+					</button>
+					<button onClick={handleCopy} disabled={isTodoDisable}>
+						Копировать
 					</button>
 					<button
 						onClick={() => updateInStore(todo.id, { completed: !todo.completed })}
