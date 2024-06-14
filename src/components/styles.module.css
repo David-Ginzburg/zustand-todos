@@ -1,0 +1,21 @@
+.todosWrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 25px;
+}
+
+.todoAdd {
+	display: flex;
+	gap: 10px;
+}
+
+.todosList {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.todoItem {
+	display: flex;
+	gap: 10px;
+}
