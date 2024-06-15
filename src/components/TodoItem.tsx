@@ -1,21 +1,20 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { useUpdateTodoMutation, useDeleteTodoMutation, useAddTodoMutation } from "../api/todoApi";
 import { useTodoStore } from "../store/useTodoStore";
 import styles from "./styles.module.css";
 import { TodoItemProps } from "../types/todoItem";
+import { useShallow } from "zustand/react/shallow";
 
-export const TodoItem: React.FC<TodoItemProps> = ({ todo }) => {
+export const TodoItem: React.FC<TodoItemProps> = memo(({ todo }) => {
 	const [isEditing, setIsEditing] = useState(false);
 	const [newTitle, setNewTitle] = useState(todo.title);
 
 	const [updateTodo, { isLoading: isTodoUpdateing }] = useUpdateTodoMutation();
 	const [deleteTodo, { isLoading: isTodoDeleting }] = useDeleteTodoMutation();
 	const [addTodo, { isLoading: isTodoAdding }] = useAddTodoMutation();
-	const {
-		deleteTodo: deleteFromStore,
-		updateTodo: updateInStore,
-		addTodo: addTodoToStore,
-	} = useTodoStore();
+	const deleteFromStore = useTodoStore(useShallow((state) => state.deleteTodo));
+	const updateInStore = useTodoStore(useShallow((state) => state.updateTodo));
+	const addTodoToStore = useTodoStore(useShallow((state) => state.addTodo));
 
 	const isTodoDisable = isTodoUpdateing || isTodoDeleting || isTodoAdding;
 
@@ -98,4 +97,4 @@ export const TodoItem: React.FC<TodoItemProps> = ({ todo }) => {
 			)}
 		</div>
 	);
-};
+});

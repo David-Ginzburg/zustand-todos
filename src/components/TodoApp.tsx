@@ -1,45 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { useGetTodosQuery, useAddTodoMutation } from "../api/todoApi";
-import { useTodoStore } from "../store/useTodoStore";
+import React from "react";
+import { useGetTodosQuery } from "../api/todoApi";
 import { TodoList } from "./TodoList";
 import styles from "./styles.module.css";
+import { TodoAdd } from "./TodoAdd";
 
 export const TodoApp: React.FC = () => {
-	const [title, setTitle] = useState("");
-	const { data: todosFromApi, error, isLoading } = useGetTodosQuery();
-	const [addTodo, { isLoading: isTodoAdding }] = useAddTodoMutation();
-	const { setTodos, addTodo: addTodoToStore } = useTodoStore();
-
-	useEffect(() => {
-		if (todosFromApi) {
-			setTodos(todosFromApi.slice(0, 10));
-		}
-	}, [todosFromApi, setTodos]);
-
-	const handleAddTodo = async () => {
-		if (title.trim()) {
-			const newTodo = await addTodo({ userId: 1, title, completed: false }).unwrap();
-			addTodoToStore(newTodo);
-			setTitle("");
-		}
-	};
+	const { error, isLoading } = useGetTodosQuery();
 
 	return (
 		<div className={styles.todosWrapper}>
 			<div>
 				<h1>Todo App</h1>
-				<div className={styles.todoAdd}>
-					<input
-						type="text"
-						value={title}
-						onChange={(e) => setTitle(e.target.value)}
-						placeholder="Add a new task"
-						disabled={isTodoAdding}
-					/>
-					<button onClick={handleAddTodo} disabled={isTodoAdding}>
-						Добавить TODO
-					</button>
-				</div>
+				<TodoAdd />
 
 				{isLoading && <p>Загрузка...</p>}
 				{error && <p>Ошибка получения todos</p>}
