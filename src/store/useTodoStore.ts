@@ -20,7 +20,7 @@ export const useTodoStore = create<TodoState>((set) => ({
 	setTodos: (todos) => set({ todos }),
 	addTodo: (todo) =>
 		set((state) => ({
-			todos: [...state.todos, { ...todo, id: Math.floor(Math.random() * 10000) }],
+			todos: [...state.todos, { ...todo, id: Math.floor(Math.random() * (200 - 11 + 1)) + 11 }],
 		})),
 	deleteTodo: (id) =>
 		set((state) => ({

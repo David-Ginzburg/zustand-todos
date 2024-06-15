@@ -51,6 +51,7 @@ button {
 	transition: all 0.3s;
 	background: #3498db;
 	color: #fff;
+	max-height: 1.6rem;
 }
 
 button:hover {

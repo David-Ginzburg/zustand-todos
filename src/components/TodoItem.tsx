@@ -47,8 +47,25 @@ export const TodoItem: React.FC<TodoItemProps> = ({ todo }) => {
 		addTodoToStore(newTodo);
 	};
 
+	const handleToggleCompletion = async () => {
+		const updatedTodo = await updateTodo({
+			id: todo.id,
+			completed: !todo.completed,
+			userId: todo.userId,
+			title: todo.title,
+		}).unwrap();
+		updateInStore(todo.id, { completed: updatedTodo.completed });
+	};
+
 	return (
 		<div className={styles.todoItem}>
+			<input
+				type="checkbox"
+				checked={todo.completed}
+				onChange={handleToggleCompletion}
+				className={styles.todoItemCheckbox}
+				disabled={isEditing || isTodoDisable}
+			/>
 			{isEditing ? (
 				<>
 					<input
@@ -58,12 +75,13 @@ export const TodoItem: React.FC<TodoItemProps> = ({ todo }) => {
 						disabled={isTodoDisable}
 					/>
 					<button onClick={handleSave} disabled={isTodoDisable}>
-						Save
+						Сохранить
 					</button>
 				</>
 			) : (
 				<>
 					<span
+						className={styles.todoItemText}
 						style={{
 							textDecoration: todo.completed ? "line-through" : "none",
 						}}
@@ -78,12 +96,6 @@ export const TodoItem: React.FC<TodoItemProps> = ({ todo }) => {
 					</button>
 					<button onClick={handleCopy} disabled={isTodoDisable}>
 						Копировать
-					</button>
-					<button
-						onClick={() => updateInStore(todo.id, { completed: !todo.completed })}
-						disabled={isTodoDisable}
-					>
-						{todo.completed ? "Не выполнено" : "Выполнено"}
 					</button>
 				</>
 			)}
