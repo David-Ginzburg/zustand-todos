@@ -1,19 +1,5 @@
 import { create } from "zustand";
-
-interface Todo {
-	userId: number;
-	id: number;
-	title: string;
-	completed: boolean;
-}
-
-interface TodoState {
-	todos: Todo[];
-	setTodos: (todos: Todo[]) => void;
-	addTodo: (todo: Todo) => void;
-	deleteTodo: (id: number) => void;
-	updateTodo: (id: number, newTodo: Partial<Todo>) => void;
-}
+import { TodoState } from "../types/todoState";
 
 export const useTodoStore = create<TodoState>((set) => ({
 	todos: [],

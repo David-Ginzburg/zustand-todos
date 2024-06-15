@@ -2,10 +2,7 @@ import React, { useState } from "react";
 import { useUpdateTodoMutation, useDeleteTodoMutation, useAddTodoMutation } from "../api/todoApi";
 import { useTodoStore } from "../store/useTodoStore";
 import styles from "./styles.module.css";
-
-interface TodoItemProps {
-	todo: { userId: number; id: number; title: string; completed: boolean };
-}
+import { TodoItemProps } from "../types/todoItem";
 
 export const TodoItem: React.FC<TodoItemProps> = ({ todo }) => {
 	const [isEditing, setIsEditing] = useState(false);
