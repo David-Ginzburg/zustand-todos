@@ -16,7 +16,8 @@
 	gap: 10px;
 }
 
-.todoItem {
+.todoItem,
+.todoItem form {
 	display: flex;
 	gap: 10px;
 }
