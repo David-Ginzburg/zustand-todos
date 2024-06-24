@@ -3,18 +3,20 @@ import { Todo } from "../types/todo";
 
 export const todoApi = createApi({
 	reducerPath: "todoApi",
-	baseQuery: fetchBaseQuery({ baseUrl: "https://jsonplaceholder.typicode.com/" }),
-	tagTypes: ["Todo"],
+	baseQuery: fetchBaseQuery({ baseUrl: "/api" }),
+	tagTypes: ['todos'],
 	endpoints: (builder) => ({
 		getTodos: builder.query<Todo[], void>({
-			query: () => "todos",
+			query		: () => "todos",
+			providesTags: ['todos']
 		}),
 		addTodo: builder.mutation<Todo, Partial<Todo>>({
 			query: (newTodo) => ({
 				url: "todos",
 				method: "POST",
-				body: newTodo,
+				body: newTodo
 			}),
+			invalidatesTags: ['todos']
 		}),
 		updateTodo: builder.mutation<Todo, Partial<Todo>>({
 			query: ({ id, ...patch }) => ({
@@ -22,12 +24,14 @@ export const todoApi = createApi({
 				method: "PUT",
 				body: patch,
 			}),
+			invalidatesTags: ['todos']
 		}),
-		deleteTodo: builder.mutation<{ success: boolean; id: number }, number>({
+		deleteTodo: builder.mutation<void, string>({
 			query: (id) => ({
 				url: `todos/${id}`,
 				method: "DELETE",
 			}),
+			invalidatesTags: ['todos']
 		}),
 	}),
 });
