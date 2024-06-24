@@ -1,31 +1,33 @@
-import React, { memo, useState } from "react";
+import React, { memo } from "react";
 import { useAddTodoMutation } from "../api/todoApi";
-import { useTodoStore } from "../store/useTodoStore";
 import styles from "./styles.module.css";
-import { useShallow } from "zustand/react/shallow";
 
 export const TodoAdd: React.FC = memo(() => {
-	const [title, setTitle] = useState("");
-	const [addTodo] = useAddTodoMutation();
-	const addTodoToStore = useTodoStore(useShallow((state) => state.addTodo));
-
-	const handleAddTodo = async () => {
-		if (title.trim()) {
-			const newTodo = await addTodo({ userId: 1, title, completed: false }).unwrap();
-			addTodoToStore(newTodo);
-			setTitle("");
-		}
-	};
+	const [triggerAdd, { isLoading }] = useAddTodoMutation();
 
 	return (
-		<div className={styles.todoAdd}>
+		<form
+			className={styles.todoAdd}
+			onSubmit={(e) => {
+				e.preventDefault();
+
+				const formData = new FormData(e.currentTarget);
+				const title = formData.get('title')?.toString().trim();
+
+				if(title) {
+					triggerAdd({ title });
+				}
+			}}
+		>
 			<input
 				type="text"
-				value={title}
-				onChange={(e) => setTitle(e.target.value)}
+				name="title"
 				placeholder="Добавить новую задачу"
 			/>
-			<button onClick={handleAddTodo}>Добавить TODO</button>
-		</div>
+			<button
+				children="Добавить TODO"
+				disabled={isLoading}
+			/>
+		</form>
 	);
 });
