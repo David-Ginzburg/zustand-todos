@@ -4,9 +4,11 @@ import { Todo } from "../types/todo";
 export const todoApi = createApi({
 	reducerPath: "todoApi",
 	baseQuery: fetchBaseQuery({ baseUrl: "/api" }),
+	tagTypes: ['todos'],
 	endpoints: (builder) => ({
 		getTodos: builder.query<Todo[], void>({
 			query: () => "todos",
+			providesTags: ['todos']
 		}),
 		addTodo: builder.mutation<Todo, Partial<Todo>>({
 			query: (newTodo) => ({
@@ -14,35 +16,7 @@ export const todoApi = createApi({
 				method: "POST",
 				body: newTodo
 			}),
-			async onQueryStarted(payload, { dispatch, queryFulfilled }) {
-				try {
-					const { data } = await queryFulfilled
-
-					/*
-					// Spread style
-					dispatch(
-						todoApi.util.updateQueryData('getTodos', undefined, (draft) => {
-							return [...draft, data];
-						})
-					);
-
-					// Push style
-					dispatch(
-						todoApi.util.updateQueryData('getTodos', undefined, (draft) => {
-							draft.push(data);
-						})
-					);
-					*/
-
-					dispatch(
-						todoApi.util.updateQueryData('getTodos', undefined, (draft) => {
-							return [...draft, data];
-						})
-					);
-				} catch {
-					// @TODO: Return error
-				}
-			},
+			invalidatesTags: ['todos']
 		}),
 		updateTodo: builder.mutation<Todo, Partial<Todo>>({
 			query: ({ id, ...patch }) => ({
@@ -51,9 +25,6 @@ export const todoApi = createApi({
 				body: patch,
 			}),
 			async onQueryStarted({ id, ...params }, { dispatch, queryFulfilled }) {
-				try {
-					await queryFulfilled
-
 					/*
 					// Map style
 					dispatch(
@@ -77,12 +48,16 @@ export const todoApi = createApi({
 					);
 					*/
 
-					dispatch(
+					const patch = dispatch(
 						todoApi.util.updateQueryData('getTodos', undefined, (draft) => {
 							return draft.map((todo) => todo.id === id ? { ...todo, ...params } : todo)
 						})
 					);
+				try {
+					await queryFulfilled;
 				} catch {
+					patch.undo();
+
 					// @TODO: Return error
 				}
 			},
@@ -93,9 +68,6 @@ export const todoApi = createApi({
 				method: "DELETE",
 			}),
 			async onQueryStarted(id, { dispatch, queryFulfilled }) {
-				try {
-					await queryFulfilled
-
 					/*
 					// Filter style
 					dispatch(
@@ -116,12 +88,16 @@ export const todoApi = createApi({
 					);
 					*/
 
-					dispatch(
+					const patch = dispatch(
 						todoApi.util.updateQueryData('getTodos', undefined, (draft) => {
 							return draft.filter((todo) => todo.id !== id);
 						})
 					);
+				try {
+					await queryFulfilled
 				} catch {
+					patch.undo();
+
 					// @TODO: Return error
 				}
 			},
