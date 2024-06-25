@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import { useTodoStore } from "../store/useTodoStore";
 import { TodoItem } from "./TodoItem";
-import styles from "./styles.module.css";
-import { useGetTodosQuery } from "../api/todoApi";
+import styles from "./Todo.styles.module.css";
+import { useGetTodosQuery } from "../../api/todoApi";
+import { useTodoStore } from "./useTodoStore";
 
 export const TodoList: React.FC = () => {
-	const { data: todosFromApi } = useGetTodosQuery();
+	const { data: todosFromApi, error, isLoading } = useGetTodosQuery();
 	const { setTodos, todos } = useTodoStore();
 
 	useEffect(() => {
@@ -16,6 +16,8 @@ export const TodoList: React.FC = () => {
 
 	return (
 		<div className={styles.todosList}>
+			{isLoading && <p>Загрузка...</p>}
+			{error && <p>Ошибка получения todos</p>}
 			{todos.map((todo) => (
 				<TodoItem key={todo.id} todo={todo} />
 			))}

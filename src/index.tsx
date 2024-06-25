@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
-import { store } from "./store/store";
-import { TodoApp } from "./components/TodoApp";
+import { store } from "./api/store";
+import { TodoApp } from "./components/App";
 import "./index.css";
 
 const container = document.getElementById("root");
