@@ -9,7 +9,8 @@ export const TodoAdd: React.FC = memo(() => {
 
 	const handleAdd = async () => {
 		const trimmedTitle = title.trim();
-		if (title.trim()) {
+		
+		if (trimmedTitle) {
 			handleAddTodo({
 				userId: 1,
 				title: trimmedTitle,
