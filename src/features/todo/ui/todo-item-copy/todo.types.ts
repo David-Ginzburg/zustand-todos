@@ -1,4 +1,4 @@
 export interface ITodoItemCopyProps {
 	isTodoLoading: boolean;
-	handleCopy: () => void;
+	handleCopy: () => Promise<void>;
 }

@@ -6,7 +6,8 @@ export const TodoEdit: FC<TodoEditProps> = memo(
 		const [newTitle, setNewTitle] = useState(todo.title);
 
 		const handleSave = async () => {
-			handleUpdate({ newTitle, finishEdit: () => setIsEditing(false) });
+			await handleUpdate({ newTitle });
+			setIsEditing(false);
 		};
 
 		return (

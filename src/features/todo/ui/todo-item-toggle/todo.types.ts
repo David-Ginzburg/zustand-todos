@@ -4,5 +4,5 @@ export interface ITodoItemToggleProps {
 	todo: ITodo;
 	isEditing: boolean;
 	isTodoLoading: boolean;
-	toggleCompletion: () => void;
+	toggleCompletion: () => Promise<void>;
 }

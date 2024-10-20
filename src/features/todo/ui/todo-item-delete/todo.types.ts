@@ -1,4 +1,4 @@
 export interface ITodoItemDeleteProps {
 	isTodoLoading: boolean;
-	handleDelete: () => void;
+	handleDelete: () => Promise<void>;
 }

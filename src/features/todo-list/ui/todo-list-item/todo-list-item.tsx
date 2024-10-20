@@ -13,12 +13,11 @@ export const TodoListItem: FC<ITodoListItemProps> = memo(({ todo }) => {
 		});
 	};
 
-	const handleUpdate = async ({ newTitle, finishEdit }: IHandleUpdateProps) => {
+	const handleUpdate = async ({ newTitle }: IHandleUpdateProps) => {
 		await handleUpdateTodo(todo.id, {
 			...todo,
 			title: newTitle,
 		});
-		finishEdit();
 	};
 
 	const handleCopy = async () => {

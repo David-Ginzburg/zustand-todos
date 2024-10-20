@@ -6,5 +6,4 @@ export interface ITodoListItemProps {
 
 export interface IHandleUpdateProps {
 	newTitle: string;
-	finishEdit: () => void;
 }
