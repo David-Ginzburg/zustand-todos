@@ -1,7 +1,7 @@
 import { FC, memo, useCallback } from "react";
 import { IHandleUpdateProps, ITodoListItemProps } from "./todo.types";
 import { useTodoListActions } from "@features/todo-list/model/useTodoListActions";
-import { Todo } from "@features/todo/todo";
+import { Todo } from "@entities/todo/ui/todo";
 
 export const TodoListItem: FC<ITodoListItemProps> = memo(({ todo }) => {
 	const { handleUpdateTodo, handleAddTodo, handleDeleteTodo, isTodoLoading } = useTodoListActions();

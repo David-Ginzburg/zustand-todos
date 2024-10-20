@@ -1,7 +1,7 @@
 import { memo, useState, FC } from "react";
 import styles from "./todo.module.css";
+import { TodoEdit } from "@entities/todo/ui/todo-edit/todo-edit";
 import { ITodoItemProps } from "./todo.types";
-import { TodoEdit } from "@features/todo/ui/todo-edit/todo-edit";
 
 export const Todo: FC<ITodoItemProps> = memo(({ todo, isTodoLoading, actions }) => {
 	const [isEditing, setIsEditing] = useState(false);
