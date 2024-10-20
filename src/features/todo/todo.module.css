@@ -1,3 +1,8 @@
+.container {
+	display: flex;
+	gap: 10px;
+}
+
 .checkbox {
 	width: 1rem;
 	height: 1rem;
@@ -6,4 +11,9 @@
 	&:disabled {
 		cursor: not-allowed;
 	}
+}
+
+.title {
+	min-width: 400px;
+	max-width: 400px;
 }

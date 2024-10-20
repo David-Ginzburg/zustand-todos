@@ -2,20 +2,18 @@ import { memo, useState, FC } from "react";
 import styles from "./todo.module.css";
 import { ITodoItemProps } from "./todo.types";
 import { TodoEdit } from "@features/todo/ui/todo-edit/todo-edit";
-import { TodoItemCopy } from "@features/todo/ui/todo-item-copy/todo-item-copy";
-import { TodoItemDelete } from "@features/todo/ui/todo-item-delete/todo-item-delete";
-import { TodoItemToggle } from "@features/todo/ui/todo-item-toggle/todo-item-toggle";
 
 export const Todo: FC<ITodoItemProps> = memo(({ todo, isTodoLoading, actions }) => {
 	const [isEditing, setIsEditing] = useState(false);
 
 	return (
 		<div className={styles.container}>
-			<TodoItemToggle
-				todo={todo}
-				isEditing={isEditing}
-				isTodoLoading={isTodoLoading}
-				toggleCompletion={actions.toggleCompletion}
+			<input
+				type="checkbox"
+				checked={todo.completed}
+				onChange={actions.toggleCompletion}
+				className={styles.checkbox}
+				disabled={isEditing || isTodoLoading}
 			/>
 			{isEditing ? (
 				<TodoEdit
@@ -37,8 +35,12 @@ export const Todo: FC<ITodoItemProps> = memo(({ todo, isTodoLoading, actions }) 
 					<button onClick={() => setIsEditing(true)} disabled={isTodoLoading}>
 						Редактировать
 					</button>
-					<TodoItemDelete isTodoLoading={isTodoLoading} handleDelete={actions.handleDelete} />
-					<TodoItemCopy isTodoLoading={isTodoLoading} handleCopy={actions.handleCopy} />
+					<button onClick={actions.handleDelete} disabled={isTodoLoading}>
+						Удалить
+					</button>
+					<button onClick={actions.handleCopy} disabled={isTodoLoading}>
+						Копировать
+					</button>
 				</>
 			)}
 		</div>

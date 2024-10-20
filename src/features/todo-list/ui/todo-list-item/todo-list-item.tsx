@@ -1,35 +1,38 @@
-import { FC, memo } from "react";
+import { FC, memo, useCallback } from "react";
 import { IHandleUpdateProps, ITodoListItemProps } from "./todo.types";
 import { useTodoListActions } from "@features/todo-list/model/useTodoListActions";
-import { Todo } from "@entities/todo/ui/todo";
+import { Todo } from "@features/todo/todo";
 
 export const TodoListItem: FC<ITodoListItemProps> = memo(({ todo }) => {
 	const { handleUpdateTodo, handleAddTodo, handleDeleteTodo, isTodoLoading } = useTodoListActions();
 
-	const toggleCompletion = async () => {
+	const toggleCompletion = useCallback(async () => {
 		await handleUpdateTodo(todo.id, {
 			...todo,
 			completed: !todo.completed,
 		});
-	};
+	}, [handleUpdateTodo, todo]);
 
-	const handleUpdate = async ({ newTitle }: IHandleUpdateProps) => {
-		await handleUpdateTodo(todo.id, {
-			...todo,
-			title: newTitle,
-		});
-	};
+	const handleUpdate = useCallback(
+		async ({ newTitle }: IHandleUpdateProps) => {
+			await handleUpdateTodo(todo.id, {
+				...todo,
+				title: newTitle,
+			});
+		},
+		[handleUpdateTodo, todo]
+	);
 
-	const handleCopy = async () => {
+	const handleCopy = useCallback(async () => {
 		await handleAddTodo({
 			...todo,
 			completed: false,
 		});
-	};
+	}, [handleAddTodo, todo]);
 
-	const handleDelete = async () => {
+	const handleDelete = useCallback(async () => {
 		await handleDeleteTodo(todo.id);
-	};
+	}, [handleDeleteTodo, todo.id]);
 
 	return (
 		<Todo
