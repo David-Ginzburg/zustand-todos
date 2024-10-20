@@ -1,15 +1,15 @@
-import React, { memo, useState } from "react";
-import styles from "./Todo.styles.module.css";
-import { useTodoActions } from "./useTodoActions";
+import { memo, useState, FC } from "react";
+import styles from "./todo-list-add.module.css";
+import { useTodoListActions } from "@features/todo-list/model/useTodoListActions";
 
-export const TodoAdd: React.FC = memo(() => {
+export const TodoListAdd: FC = memo(() => {
 	const [title, setTitle] = useState("");
 
-	const { handleAddTodo } = useTodoActions();
+	const { handleAddTodo } = useTodoListActions();
 
 	const handleAdd = async () => {
 		const trimmedTitle = title.trim();
-		
+
 		if (trimmedTitle) {
 			handleAddTodo({
 				userId: 1,
@@ -21,7 +21,7 @@ export const TodoAdd: React.FC = memo(() => {
 	};
 
 	return (
-		<div className={styles.todoAdd}>
+		<div className={styles.container}>
 			<input
 				type="text"
 				value={title}

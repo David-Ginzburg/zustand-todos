@@ -1,7 +1,7 @@
 import { create } from "zustand";
-import { TodoState } from "./Todo.types";
+import { ITodoListStore } from "./todo-list.model";
 
-export const useTodoStore = create<TodoState>((set) => ({
+export const useTodoListStore = create<ITodoListStore>((set) => ({
 	todos: [],
 	setTodos: (todos) => set({ todos }),
 	addTodo: (todo) =>

@@ -1,0 +1,9 @@
+.container {
+	display: flex;
+	gap: 10px;
+}
+
+.title {
+	min-width: 400px;
+	max-width: 400px;
+}

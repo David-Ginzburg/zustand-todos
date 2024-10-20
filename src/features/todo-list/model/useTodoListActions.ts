@@ -1,19 +1,20 @@
 import { useCallback } from "react";
+
+import { useTodoListStore } from "./useTodoListStore";
+import { useShallow } from "zustand/react/shallow";
 import {
 	useUpdateTodoMutation,
 	useDeleteTodoMutation,
 	useAddTodoMutation,
-} from "../../api/todoApi";
-import { useTodoStore } from "./useTodoStore";
-import { useShallow } from "zustand/react/shallow";
-import { Todo } from "./Todo.types";
+} from "@entities/todo/api/todo-api";
+import { ITodo } from "@entities/todo/model/todo.model";
 
-export const useTodoActions = () => {
+export const useTodoListActions = () => {
 	const [updateTodoMutation, { isLoading: isTodoUpdating }] = useUpdateTodoMutation();
 	const [deleteTodoMutation, { isLoading: isTodoDeleting }] = useDeleteTodoMutation();
 	const [addTodoMutation, { isLoading: isTodoAdding }] = useAddTodoMutation();
 
-	const { deleteTodo, updateTodo, addTodo } = useTodoStore(
+	const { deleteTodo, updateTodo, addTodo } = useTodoListStore(
 		useShallow((state) => ({
 			deleteTodo: state.deleteTodo,
 			updateTodo: state.updateTodo,
@@ -22,7 +23,7 @@ export const useTodoActions = () => {
 	);
 
 	const handleUpdateTodo = useCallback(
-		async (todoId: number, updatedData: Omit<Todo, "id">) => {
+		async (todoId: number, updatedData: Omit<ITodo, "id">) => {
 			try {
 				const updatedTodo = await updateTodoMutation({
 					id: todoId,
@@ -52,7 +53,7 @@ export const useTodoActions = () => {
 	);
 
 	const handleAddTodo = useCallback(
-		async (newTodoData: Omit<Todo, "id">) => {
+		async (newTodoData: Omit<ITodo, "id">) => {
 			try {
 				const newTodo = await addTodoMutation(newTodoData).unwrap();
 				addTodo(newTodo);
