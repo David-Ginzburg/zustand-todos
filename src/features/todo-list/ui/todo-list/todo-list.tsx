@@ -1,12 +1,12 @@
 import { useEffect, FC } from "react";
 import styles from "./todo-list.module.css";
 import { useGetTodosQuery } from "@entities/todo/api/todo-api";
-import { useTodoListStore } from "@features/todo-list/model/useTodoListStore";
+import { useTodoListStore } from "@features/todo-list/model/hooks/useTodoListStore";
 import { TodoListItem } from "../todo-list-item/todo-list-item";
 
 export const TodoList: FC = () => {
 	const { data: todosFromApi, error, isLoading } = useGetTodosQuery();
-	const { setTodos, todos } = useTodoListStore();
+	const { setItems: setTodos, items: todos } = useTodoListStore();
 
 	useEffect(() => {
 		if (todosFromApi) {

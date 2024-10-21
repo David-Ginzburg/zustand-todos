@@ -1,6 +1,6 @@
 import { memo, useState, FC } from "react";
 import styles from "./todo-list-add.module.css";
-import { useTodoListActions } from "@features/todo-list/model/useTodoListActions";
+import { useTodoListActions } from "@features/todo-list/model/hooks/useTodoListActions";
 
 export const TodoListAdd: FC = memo(() => {
 	const [title, setTitle] = useState("");

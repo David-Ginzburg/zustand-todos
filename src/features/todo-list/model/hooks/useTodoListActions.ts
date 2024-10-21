@@ -1,6 +1,4 @@
 import { useCallback } from "react";
-
-import { useTodoListStore } from "./useTodoListStore";
 import { useShallow } from "zustand/react/shallow";
 import {
 	useUpdateTodoMutation,
@@ -8,6 +6,7 @@ import {
 	useAddTodoMutation,
 } from "@entities/todo/api/todo-api";
 import { ITodo } from "@entities/todo/model/todo.model";
+import { useTodoListStore } from "./useTodoListStore";
 
 export const useTodoListActions = () => {
 	const [updateTodoMutation, { isLoading: isTodoUpdating }] = useUpdateTodoMutation();
@@ -16,9 +15,9 @@ export const useTodoListActions = () => {
 
 	const { deleteTodo, updateTodo, addTodo } = useTodoListStore(
 		useShallow((state) => ({
-			deleteTodo: state.deleteTodo,
-			updateTodo: state.updateTodo,
-			addTodo: state.addTodo,
+			deleteTodo: state.deleteItem,
+			updateTodo: state.updateItem,
+			addTodo: state.addItem,
 		}))
 	);
 
