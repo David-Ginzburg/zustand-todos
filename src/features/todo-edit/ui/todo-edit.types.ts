@@ -4,5 +4,5 @@ export interface TodoEditProps {
 	todo: ITodo;
 	setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
 	isTodoLoading: boolean;
-	handleUpdate: ({ newTitle }: { newTitle: string }) => Promise<void>;
+	handleUpdate: (newTitle: string) => Promise<void>;
 }

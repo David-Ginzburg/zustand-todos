@@ -6,18 +6,17 @@ export const TodoEdit: FC<TodoEditProps> = memo(
 		const [newTitle, setNewTitle] = useState(todo.title);
 
 		const handleSave = async () => {
-			await handleUpdate({ newTitle });
+			await handleUpdate(newTitle);
 			setIsEditing(false);
+		};
+
+		const handleNewTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+			setNewTitle(e.target.value);
 		};
 
 		return (
 			<>
-				<input
-					type="text"
-					value={newTitle}
-					onChange={(e) => setNewTitle(e.target.value)}
-					disabled={isTodoLoading}
-				/>
+				<input type="text" value={newTitle} onChange={handleNewTitle} disabled={isTodoLoading} />
 				<button onClick={handleSave} disabled={isTodoLoading}>
 					Сохранить
 				</button>

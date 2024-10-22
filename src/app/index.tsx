@@ -2,7 +2,7 @@ import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { TodoApp } from "@pages/todo-page/todo-page";
 import { store } from "@shared/store";
-import "@shared/styles/global-styles.css";
+import "./styles/global-styles.css";
 
 const container = document.getElementById("root");
 

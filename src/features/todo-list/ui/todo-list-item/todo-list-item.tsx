@@ -1,7 +1,7 @@
 import { FC, memo, useCallback } from "react";
-import { IHandleUpdateProps, ITodoListItemProps } from "./todo.types";
+import { ITodoListItemProps } from "./todo.types";
 import { useTodoListActions } from "@features/todo-list/model/hooks/useTodoListActions";
-import { Todo } from "@entities/todo/ui/todo/todo";
+import { Todo } from "@entities/todo/ui/todo";
 
 export const TodoListItem: FC<ITodoListItemProps> = memo(({ todo }) => {
 	const { handleUpdateTodo, handleAddTodo, handleDeleteTodo, isTodoLoading } = useTodoListActions();
@@ -14,7 +14,7 @@ export const TodoListItem: FC<ITodoListItemProps> = memo(({ todo }) => {
 	}, [handleUpdateTodo, todo]);
 
 	const handleUpdate = useCallback(
-		async ({ newTitle }: IHandleUpdateProps) => {
+		async (newTitle: string) => {
 			await handleUpdateTodo(todo.id, {
 				...todo,
 				title: newTitle,

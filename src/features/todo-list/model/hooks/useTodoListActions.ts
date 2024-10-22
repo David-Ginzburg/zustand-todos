@@ -55,7 +55,10 @@ export const useTodoListActions = () => {
 		async (newTodoData: Omit<ITodo, "id">) => {
 			try {
 				const newTodo = await addTodoMutation(newTodoData).unwrap();
-				addTodo(newTodo);
+				addTodo({
+					...newTodoData,
+					id: Math.floor(Math.random() * (200 - 11 + 1)) + 11, // fake api is features
+				});
 				return newTodo;
 			} catch (error) {
 				if (error) console.error("Failed to add todo:", error);

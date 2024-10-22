@@ -1,9 +1,9 @@
-.container {
-	display: flex;
-	flex-direction: column;
-	gap: 10px;
-	min-height: 600px;
-	min-width: 921.73px;
+.mainTask {
+	margin-bottom: 10px;
+}
+
+.subtitle {
+	margin: 0;
 }
 
 .todosWrapper {
