@@ -57,7 +57,7 @@ export const useTodoListActions = () => {
 				const newTodo = await addTodoMutation(newTodoData).unwrap();
 				addTodo({
 					...newTodoData,
-					id: Math.floor(Math.random() * (200 - 11 + 1)) + 11, // fake api is features
+					id: Math.floor(Math.random() * (200 - 11 + 1)) + 11, // fake api id feature
 				});
 				return newTodo;
 			} catch (error) {

@@ -11,13 +11,13 @@ export const TodoApp: FC = () => {
 	const { data: todosFromApi } = useGetTodosQuery();
 	const { setItems: setTodos, items: todos } = useTodoListStore();
 
+	const mainTask = todos[0];
+
 	useEffect(() => {
 		if (todosFromApi) {
 			setTodos(todosFromApi.slice(0, 10));
 		}
 	}, [todosFromApi, setTodos]);
-
-	const mainTask = todos[0];
 
 	return (
 		<TodoPageLayout>
