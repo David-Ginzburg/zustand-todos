@@ -1,10 +1,10 @@
 import { FC, memo } from "react";
-import { ITodoMainTaskProps } from "./todo-main-task.types.ts";
+import { ITodoWithToggleProps } from "./todo-with-toggle.types.ts";
 import { Todo } from "@entities/todo/ui/todo";
 import { TodoToggle } from "@features/todo/ui/todo-toggle/todo-toggle.tsx";
-import styles from "./todo-main-task.module.css";
+import styles from "./todo-with-toggle.module.css";
 
-export const TodoMainTask: FC<ITodoMainTaskProps> = memo(({ todo }) => {
+export const TodoWithToggle: FC<ITodoWithToggleProps> = memo(({ todo }) => {
 	return (
 		<div className={styles.container}>
 			<TodoToggle todo={todo} />
