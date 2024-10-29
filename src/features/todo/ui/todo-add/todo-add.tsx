@@ -1,8 +1,8 @@
 import { memo, useState, FC } from "react";
-import styles from "./todo-list-add.module.css";
-import { useTodoListActions } from "@features/todo-list/model/hooks/useTodoListActions";
+import styles from "./todo-add.module.css";
+import { useTodoListActions } from "@entities/todo/hooks/useTodoListActions";
 
-export const TodoListAdd: FC = memo(() => {
+export const TodoAdd: FC = memo(() => {
 	const [title, setTitle] = useState("");
 
 	const { handleAddTodo } = useTodoListActions();

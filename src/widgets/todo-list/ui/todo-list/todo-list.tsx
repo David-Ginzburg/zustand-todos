@@ -1,8 +1,8 @@
 import { FC } from "react";
 import styles from "./todo-list.module.css";
 import { useGetTodosQuery } from "@entities/todo/api/todo-api";
-import { useTodoListStore } from "@features/todo-list/model/hooks/useTodoListStore";
 import { TodoListItem } from "../todo-list-item/todo-list-item";
+import { useTodoListStore } from "@entities/todo/hooks/useTodoListStore";
 
 export const TodoList: FC = () => {
 	const { error, isLoading } = useGetTodosQuery();

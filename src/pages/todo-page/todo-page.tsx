@@ -1,11 +1,11 @@
 import { FC, useEffect } from "react";
 import styles from "./todo-page.module.css";
-import { TodoListAdd } from "@features/todo-list/ui/todo-list-add/todo-list-add";
-import { TodoList } from "@features/todo-list/ui/todo-list/todo-list";
 import { useGetTodosQuery } from "@entities/todo/api/todo-api";
-import { useTodoListStore } from "@features/todo-list/model/hooks/useTodoListStore";
-import { TodoMainTask } from "@features/todo-main-task/ui/todo-main-task";
+import { TodoMainTask } from "@features/todo/ui/todo-main-task/todo-main-task";
 import { TodoPageLayout } from "./ui/todo-page-layout/todo-page-layout";
+import { useTodoListStore } from "@entities/todo/hooks/useTodoListStore";
+import { TodoList } from "@widgets/todo-list/ui/todo-list/todo-list";
+import { TodoAdd } from "@features/todo/ui/todo-add/todo-add";
 
 export const TodoApp: FC = () => {
 	const { data: todosFromApi } = useGetTodosQuery();
@@ -28,7 +28,7 @@ export const TodoApp: FC = () => {
 				</div>
 			)}
 			<div className={styles.todosWrapper}>
-				<TodoListAdd />
+				<TodoAdd />
 				<TodoList />
 			</div>
 		</TodoPageLayout>
