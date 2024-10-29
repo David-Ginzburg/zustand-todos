@@ -1,7 +1,7 @@
 import { memo, FC } from "react";
-import { ITodoItemProps } from "./todo.types";
+import { ITodoProps } from "./todo.types";
 
-export const Todo: FC<ITodoItemProps> = memo(({ todo }) => {
+export const Todo: FC<ITodoProps> = memo(({ todo }) => {
 	return (
 		<span
 			style={{

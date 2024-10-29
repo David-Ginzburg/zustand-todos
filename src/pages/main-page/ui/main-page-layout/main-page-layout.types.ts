@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
 
-export interface ITodoPageLayout {
+export interface IMainPageLayout {
 	children: ReactNode;
 }

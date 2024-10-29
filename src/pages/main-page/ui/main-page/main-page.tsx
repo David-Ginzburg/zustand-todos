@@ -1,13 +1,13 @@
 import { FC, useEffect } from "react";
-import styles from "./todo-page.module.css";
+import styles from "./main-page.module.css";
 import { useGetTodosQuery } from "@entities/todo/api/todo-api";
-import { TodoMainTask } from "@features/todo/ui/todo-main-task/todo-main-task";
-import { TodoPageLayout } from "./ui/todo-page-layout/todo-page-layout";
 import { useTodoListStore } from "@entities/todo/hooks/useTodoListStore";
-import { TodoList } from "@widgets/todo-list/ui/todo-list/todo-list";
 import { TodoAdd } from "@features/todo/ui/todo-add/todo-add";
+import { MainPageLayout } from "../main-page-layout/main-page-layout";
+import { TodoMainTask } from "@widgets/todo-main-task/ui/todo-main-task";
+import { TodoList } from "@widgets/todo-list";
 
-export const TodoApp: FC = () => {
+export const MainPage: FC = () => {
 	const { data: todosFromApi } = useGetTodosQuery();
 	const { setItems: setTodos, items: todos } = useTodoListStore();
 
@@ -20,7 +20,7 @@ export const TodoApp: FC = () => {
 	}, [todosFromApi, setTodos]);
 
 	return (
-		<TodoPageLayout>
+		<MainPageLayout>
 			{mainTask && (
 				<div className={styles.mainTask}>
 					<h2 className={styles.subtitle}>Main task</h2>
@@ -31,6 +31,6 @@ export const TodoApp: FC = () => {
 				<TodoAdd />
 				<TodoList />
 			</div>
-		</TodoPageLayout>
+		</MainPageLayout>
 	);
 };
