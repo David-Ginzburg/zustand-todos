@@ -2,8 +2,7 @@ import { useState } from "react";
 import { TodoEditProps } from "./todo-edit.types";
 import { useTodoListActions } from "@entities/todo/hooks/useTodoListActions";
 
-export const useTodoEdit = ({ todo }: TodoEditProps) => {
-	const [isEditing, setIsEditing] = useState(false);
+export const TodoEdit = ({ todo, setIsEditing }: TodoEditProps) => {
 	const [newTitle, setNewTitle] = useState(todo.title);
 	const { handleUpdateTodo, isTodoLoading } = useTodoListActions();
 
@@ -19,7 +18,7 @@ export const useTodoEdit = ({ todo }: TodoEditProps) => {
 		setNewTitle(e.target.value);
 	};
 
-	const TodoEdit = () => (
+	return (
 		<>
 			<input type="text" value={newTitle} onChange={handleNewTitle} disabled={isTodoLoading} />
 			<button onClick={handleUpdate} disabled={isTodoLoading}>
@@ -27,20 +26,4 @@ export const useTodoEdit = ({ todo }: TodoEditProps) => {
 			</button>
 		</>
 	);
-
-	const TodoEditButton = () => (
-		<button onClick={() => setIsEditing(true)} disabled={isTodoLoading}>
-			Редактировать
-		</button>
-	);
-
-	return {
-		newTitle,
-		isTodoLoading,
-		handleUpdate,
-		handleNewTitle,
-		isEditing,
-		TodoEdit,
-		TodoEditButton,
-	};
 };

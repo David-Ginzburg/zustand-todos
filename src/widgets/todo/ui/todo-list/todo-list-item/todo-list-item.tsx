@@ -5,22 +5,25 @@ import { Todo } from "@entities/todo/ui/todo";
 import { TodoToggle } from "@features/todo/ui/todo-toggle/todo-toggle";
 import { TodoDelete } from "@features/todo/ui/todo-delete/todo-delete";
 import { TodoCopy } from "@features/todo/ui/todo-copy/todo-copy";
-import { useTodoEdit } from "@features/todo/ui/todo-edit/todo-edit";
+import { useEditState } from "@shared/hooks/edit/useEditState";
+import { TodoEdit } from "@features/todo/ui/todo-edit/todo-edit";
+import { useTodoListActions } from "@entities/todo/hooks/useTodoListActions";
 
 export const TodoListItem: FC<ITodoListItemProps> = memo(({ todo }) => {
-	const { isEditing, TodoEdit, TodoEditButton } = useTodoEdit({ todo });
+	const { isTodoLoading } = useTodoListActions();
+	const { isEditing, setIsEditing, editButton } = useEditState({ disabled: isTodoLoading });
 
 	return (
 		<div className={styles.container}>
 			<TodoToggle todo={todo} />
 			{isEditing ? (
-				<TodoEdit />
+				<TodoEdit todo={todo} setIsEditing={setIsEditing} />
 			) : (
 				<>
 					<div className={styles.todoWrapper}>
 						<Todo todo={todo} />
 					</div>
-					<TodoEditButton />
+					{editButton}
 					<TodoDelete todo={todo} />
 					<TodoCopy todo={todo} />
 				</>

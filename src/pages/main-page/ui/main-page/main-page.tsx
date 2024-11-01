@@ -4,8 +4,8 @@ import { useGetTodosQuery } from "@entities/todo/api/todo-api";
 import { useTodoListStore } from "@entities/todo/hooks/useTodoListStore";
 import { TodoAdd } from "@features/todo/ui/todo-add/todo-add";
 import { MainPageLayout } from "../main-page-layout/main-page-layout";
-import { TodoList } from "@widgets/todo-list";
-import { TodoWithToggle } from "@widgets/todo-with-toggle/ui/todo-with-toggle";
+import { TodoWithToggle } from "@widgets/todo/ui/todo-with-toggle/todo-with-toggle";
+import { TodoList } from "@widgets/todo/ui/todo-list/todo-list";
 
 export const MainPage: FC = () => {
 	const { data: todosFromApi } = useGetTodosQuery();
